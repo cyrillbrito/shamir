@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <link rel='stylesheet' type='text/css' media='screen' href='css/bootstrap.min.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
+
+  <script src='js/bootstrap.bundle.min.js'></script>
+  <script src='js/secrets.min.js'></script>
+  <script src='js/main.js'></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>Shamir</h1>
+
+    <h6>
+      Share your secret with a cryptographically secure method. All running locally in your browser. Your secrets
+      never leave your machine!
+    </h6>
+    <p>
+      To achive this this project uses
+      <a href="https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing">Shamir's secret sharing</a>
+      to split your secret into parts which can be combined back into the original secret using some
+      or all of the parts.
+    </p>
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#combine">Combine</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#generate">Generate</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+
+      <!-- COMBINE CONTENT -->
+      <div class="tab-pane fade show active" id="combine">
+
+        <p>Combine the shares to reveal the secret.</p>
+
+        <h3>Shares</h3>
+
+        <div id="sharesInputs"></div>
+
+        <div class="card">
+          <div class="card-header">
+            Secret
+          </div>
+          <div class="card-body">
+            OASJDJAOISJDOISAJD
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATE CONTENT -->
+      <div class="tab-pane fade" id="generate">
+
+        <p>Where you can create new shares for a secret.</p>
+
+
+        <h3>Form</h3>
+
+        <form>
+
+          <div class="mb-3">
+            <label for="secretInput" class="form-label">Secret message:</label>
+            <textarea class="form-control" id="secretInput" rows="3">Super secret message!!!</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="kInput" class="form-label">Minimum required shares:</label>
+            <input type="number" class="form-control" id="kInput" value="2">
+          </div>
+          <div class="mb-3">
+            <label for="nInput" class="form-label">Shares:</label>
+            <input type="number" class="form-control" id="nInput" value="4">
+          </div>
+          <!-- <div class="mb-3">
+            <button type="submit" class="btn btn-primary mb-3">Generate shares</button>
+          </div> -->
+
+
+
+        </form>
+
+        <h3>Generated shares</h3>
+
+        <div id="shares">
+          <div class="card">
+            <div class="card-header">
+              SHARE 1
+            </div>
+            <div class="card-body">
+              asdasdasd asd asd
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+</body>
+
+</html>
