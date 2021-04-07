@@ -10,9 +10,6 @@
   <link rel='stylesheet' type='text/css' media='screen' href='css/bootstrap.min.css'>
   <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
 
-  <script src='js/bootstrap.bundle.min.js'></script>
-  <script src='js/secrets.min.js'></script>
-  <script src='js/main.js'></script>
 </head>
 
 <body>
@@ -73,37 +70,21 @@
         <form>
 
           <div class="mb-3">
-            <label for="secretInput" class="form-label">Secret message:</label>
-            <textarea class="form-control" id="secretInput" rows="3">Super secret message!!!</textarea>
+            <label for="secretInput" class="form-label">Secret Message:</label>
+            <textarea class="form-control" id="secretInput" rows="3"></textarea>
           </div>
           <div class="mb-3">
-            <label for="kInput" class="form-label">Minimum required shares:</label>
-            <input type="number" class="form-control" id="kInput" value="2">
+            <label for="nInput" class="form-label">Total Number of Shares:</label>
+            <input type="number" class="form-control" id="nInput">
           </div>
           <div class="mb-3">
-            <label for="nInput" class="form-label">Shares:</label>
-            <input type="number" class="form-control" id="nInput" value="4">
+            <label for="kInput" class="form-label">Minimum Required Shares:</label>
+            <input type="number" class="form-control" id="kInput">
           </div>
-          <!-- <div class="mb-3">
-            <button type="submit" class="btn btn-primary mb-3">Generate shares</button>
-          </div> -->
-
-
 
         </form>
 
-        <h3>Generated shares</h3>
-
-        <div id="shares">
-          <div class="card">
-            <div class="card-header">
-              SHARE 1
-            </div>
-            <div class="card-body">
-              asdasdasd asd asd
-            </div>
-          </div>
-        </div>
+        <div id="shares"></div>
 
 
       </div>
@@ -112,6 +93,11 @@
     </div>
 
   </div>
+
+  <script src='js/bootstrap.bundle.min.js'></script>
+  <script src='js/secrets.min.js'></script>
+  <script src='js/main.js'></script>
+
 </body>
 
 </html>

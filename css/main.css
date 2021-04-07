@@ -1,3 +1,7 @@
+.container {
+  margin-top: 40px;
+}
+
 .tab-content {
   padding: 20px
 }
@@ -6,6 +10,7 @@ input.form-control {
   width: 30%;
 }
 
-#shares .card {
+#shares .card,
+#shares .alert {
   margin: 20px 0;
 }

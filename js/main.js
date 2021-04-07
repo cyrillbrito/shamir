@@ -1,63 +1,51 @@
 
-// generate a 512-bit key
-var key = secrets.random(512) // => key is a hex string
 
-// split into 10 shares with a threshold of 5
-var shares = secrets.share(key, 10, 5)
-// => shares = ['801xxx...xxx','802xxx...xxx','803xxx...xxx','804xxx...xxx','805xxx...xxx']
+// Generate tab events
 
-// combine 4 shares
-var comb = secrets.combine(shares.slice(0, 4))
-console.log(comb === key) // => false
+document.getElementById('secretInput').addEventListener('input', generate);
+document.getElementById('kInput').addEventListener('input', generate);
+document.getElementById('nInput').addEventListener('input', generate);
+generate();
 
-// combine 5 shares
-comb = secrets.combine(shares.slice(4, 9))
-console.log(comb === key) // => true
+function generate() {
 
-// combine ALL shares
-comb = secrets.combine(shares)
-console.log(comb === key) // => true
+  const secretStr = document.getElementById('secretInput').value;
+  const secret = secrets.str2hex(secretStr);
 
-// create another share with id 8
-var newShare = secrets.newShare(8, shares) // => newShare = '808xxx...xxx'
+  const nStr = document.getElementById('nInput').value;
+  const n = Number(nStr);
 
-// reconstruct using 4 original shares and the new share:
-comb = secrets.combine(shares.slice(1, 5).concat(newShare))
-console.log(comb === key) // => true
+  const kStr = document.getElementById('kInput').value;
+  const k = Number(kStr);
 
-const inputs = [];
+  const sharesDiv = document.getElementById('shares');
+  sharesDiv.innerHTML = '';
 
-setTimeout(() => {
-  const secretInput = document.getElementById('secretInput');
-  const kInput = document.getElementById('kInput');
-  const nInput = document.getElementById('nInput');
-
-  secretInput.addEventListener('change', (event) => {
-
-    var pw = secretInput.value;
-
-    var n = Number(nInput.value);
-    var k = Number(kInput.value);
-
-    var pwHex = secrets.str2hex(pw);
-    var shares = secrets.share(pwHex, n, k);
-
-    console.log(shares);
-
-    document.getElementById('shares').innerHTML = '';
+  if (!secretStr || !nStr || !kStr) {
+    addAlert('All the fields are required');
+  } else if (n < 2) {
+    addAlert('Total Number of Shares must be bigger than 2');
+  } else if (k < 2 || n < k) {
+    addAlert('Minimum Required Shares must be more than 2 and less or equal to the Total Number of Shares');
+  } else {
+    const shares = secrets.share(secret, n, k);
     for (let i = 0; i < shares.length; i++) {
-      pushShareCard(i + 1, shares[i]);
+      addShareCard(i + 1, shares[i]);
     }
+  }
+}
 
+function addAlert(message) {
 
-  });
+  const alert = document.createElement("div");
+  alert.classList.add('alert');
+  alert.classList.add('alert-warning');
+  alert.innerText = message;
 
-  pushShareInput();
+  document.getElementById('shares').append(alert);
+}
 
-}, 1000);
-
-
-function pushShareCard(shareN, shareHash) {
+function addShareCard(shareN, shareHash) {
 
   const card = document.createElement("div");
   card.classList.add('card');
@@ -75,6 +63,15 @@ function pushShareCard(shareN, shareHash) {
 
   document.getElementById('shares').append(card);
 }
+
+
+
+const inputs = [];
+pushShareInput();
+
+
+
+
 
 function pushShareInput() {
 
