@@ -51,10 +51,10 @@
 
         <div class="card">
           <div class="card-header">
-            Secret
+            Secret Message
           </div>
-          <div class="card-body">
-            OASJDJAOISJDOISAJD
+          <div class="card-body" id="combine-secret">
+            Nothing
           </div>
         </div>
       </div>
@@ -94,9 +94,27 @@
 
   </div>
 
+  <div class="modal fade" data-bs-backdrop="static" id="scanModal">
+    <div class="modal-dialog" id="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">QR Code Scanner</h5>
+          <button id="closeModalBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="scanningInput = null">
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="message">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+          <canvas id="canvas" hidden></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src='js/bootstrap.bundle.min.js'></script>
   <script src='js/secrets.min.js'></script>
   <script src='js/qrcode.min.js'></script>
+  <script src="js/jsQR.js"></script>
   <script src='js/main.js'></script>
 
 </body>

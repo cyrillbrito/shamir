@@ -1,6 +1,100 @@
 
+/* ----- QR Scanner ----- */
 
-/* --- Generate tab --- */
+const videoEl = document.createElement('video');
+const messageEl = document.getElementById('message');
+const closeModalEl = document.getElementById('closeModalBtn');
+const modalEl = document.getElementById('modal');
+const canvasEl = document.getElementById('canvas');
+const canvas = canvasEl.getContext('2d');
+let scanningInput;
+
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(function (stream) {
+  messageEl.hidden = true;
+  videoEl.srcObject = stream;
+  videoEl.setAttribute('playsinline', true);
+  videoEl.play();
+  requestAnimationFrame(tick);
+});
+
+function tick() {
+  if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA && scanningInput) {
+    console.log('gg');
+    canvasEl.hidden = false;
+    canvasEl.height = videoEl.videoHeight;
+    canvasEl.width = videoEl.videoWidth;
+    modalEl.style.width = videoEl.videoWidth + 32 + 'px';
+    canvas.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+    var imageData = canvas.getImageData(0, 0, canvasEl.width, canvasEl.height);
+    var code = jsQR(imageData.data, imageData.width, imageData.height, {
+      inversionAttempts: 'dontInvert',
+    });
+    if (code) {
+      scanningInput.value = code.data;
+      closeModalEl.click();
+      combine();
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ----- Combine tab ----- */
+
+const inputs = [];
+pushShareInput();
+
+function pushShareInput() {
+
+  const sharesEl = document.getElementById('sharesInputs');
+
+  const group = document.createElement('div');
+  group.classList.add('input-group');
+  sharesEl.append(group);
+
+  const input = document.createElement('input');
+  input.classList.add('form-control');
+  group.append(input);
+  inputs.push(input);
+
+  const scanBtn = document.createElement('button');
+  scanBtn.innerText = 'Scan QR Code';
+  scanBtn.classList.add('btn');
+  scanBtn.classList.add('btn-outline-secondary');
+  scanBtn.setAttribute('data-bs-toggle', 'modal');
+  scanBtn.setAttribute('data-bs-target', '#scanModal');
+  scanBtn.onclick = () => { scanningInput = input };
+  group.append(scanBtn);
+
+  const removeBtn = document.createElement('button');
+  removeBtn.innerText = 'Remove share';
+  removeBtn.classList.add('btn');
+  removeBtn.classList.add('btn-outline-danger');
+  group.append(removeBtn);
+
+  input.addEventListener('input', combine);
+}
+
+function combine() {
+
+  if (inputs.every(i => i.value)) {
+    pushShareInput();
+  }
+
+  const shares = inputs.map(i => i.value).filter(s => s);
+  const el = document.getElementById('combine-secret');
+
+  try {
+    const secret = secrets.combine(shares);
+    el.innerText = secrets.hex2str(secret);
+  } catch (e) { 
+    el.innerText = 'Some of the shares are invalid';
+  }
+}
+
+
+
+/* ----- Generate tab ----- */
+
 document.getElementById('secretInput').addEventListener('input', generate);
 document.getElementById('kInput').addEventListener('input', generate);
 document.getElementById('nInput').addEventListener('input', generate);
@@ -36,7 +130,7 @@ function generate() {
 
 function addAlert(message) {
 
-  const alert = document.createElement("div");
+  const alert = document.createElement('div');
   alert.classList.add('alert');
   alert.classList.add('alert-warning');
   alert.innerText = message;
@@ -46,7 +140,7 @@ function addAlert(message) {
 
 function addShareCard(shareN, shareHash) {
 
-  const card = document.createElement("div");
+  const card = document.createElement('div');
   card.classList.add('card');
 
   const header = document.createElement('div');
@@ -69,31 +163,4 @@ function addShareCard(shareN, shareHash) {
   card.append(body);
 
   document.getElementById('shares').append(card);
-}
-
-
-
-const inputs = [];
-pushShareInput();
-
-
-
-
-
-function pushShareInput() {
-
-  const input = document.createElement("input");
-  input.classList.add('form-control');
-  document.getElementById('sharesInputs').append(input);
-  inputs.push(input);
-
-  input.addEventListener('keyup', (event) => {
-    if (inputs.every(i => i.value)) {
-      pushShareInput();
-    }
-    const shares = inputs.map(i => i.value).filter(s => s);
-    const secret = secrets.combine(shares);
-
-    console.log(secrets.hex2str(secret));
-  });
 }
