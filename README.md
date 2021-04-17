@@ -7,6 +7,8 @@
 
 https://github.com/grempe/secrets.js
 https://github.com/twbs/bootstrap
+https://github.com/davidshimjs/qrcodejs
+
 
 
 # Inspiration

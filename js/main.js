@@ -1,7 +1,6 @@
 
 
-// Generate tab events
-
+/* --- Generate tab --- */
 document.getElementById('secretInput').addEventListener('input', generate);
 document.getElementById('kInput').addEventListener('input', generate);
 document.getElementById('nInput').addEventListener('input', generate);
@@ -56,7 +55,15 @@ function addShareCard(shareN, shareHash) {
 
   const body = document.createElement('div');
   body.classList.add('card-body');
-  body.append(shareHash);
+
+  const qr = document.createElement('div');
+  new QRCode(qr, shareHash);
+  body.append(qr);
+
+  const hash = document.createElement('div');
+  hash.classList.add('hash');
+  hash.innerText = shareHash;
+  body.append(hash);
 
   card.append(header);
   card.append(body);
