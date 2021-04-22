@@ -1,4 +1,3 @@
-
 /* ----- QR Scanner ----- */
 
 const videoEl = document.createElement('video');
@@ -9,7 +8,7 @@ const canvasEl = document.getElementById('canvas');
 const canvas = canvasEl.getContext('2d');
 let scanningInput;
 
-navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(function (stream) {
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then((stream) => {
   messageEl.hidden = true;
   videoEl.srcObject = stream;
   videoEl.setAttribute('playsinline', true);
@@ -19,14 +18,13 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).th
 
 function tick() {
   if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA && scanningInput) {
-    console.log('gg');
     canvasEl.hidden = false;
     canvasEl.height = videoEl.videoHeight;
     canvasEl.width = videoEl.videoWidth;
-    modalEl.style.width = videoEl.videoWidth + 32 + 'px';
+    modalEl.style.width = `${videoEl.videoWidth + 32}px`;
     canvas.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
-    var imageData = canvas.getImageData(0, 0, canvasEl.width, canvasEl.height);
-    var code = jsQR(imageData.data, imageData.width, imageData.height, {
+    const imageData = canvas.getImageData(0, 0, canvasEl.width, canvasEl.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height, {
       inversionAttempts: 'dontInvert',
     });
     if (code) {
@@ -44,7 +42,6 @@ const inputs = [];
 pushShareInput();
 
 function pushShareInput() {
-
   const sharesEl = document.getElementById('sharesInputs');
 
   const group = document.createElement('div');
@@ -75,7 +72,6 @@ function pushShareInput() {
 }
 
 function combine() {
-
   if (inputs.every(i => i.value)) {
     pushShareInput();
   }
@@ -86,7 +82,7 @@ function combine() {
   try {
     const secret = secrets.combine(shares);
     el.innerText = secrets.hex2str(secret);
-  } catch (e) { 
+  } catch (e) {
     el.innerText = 'Some of the shares are invalid';
   }
 }
@@ -145,7 +141,7 @@ function addShareCard(shareN, shareHash) {
 
   const header = document.createElement('div');
   header.classList.add('card-header');
-  header.append('Share ' + shareN);
+  header.append(`Share ${shareN}`);
 
   const body = document.createElement('div');
   body.classList.add('card-body');

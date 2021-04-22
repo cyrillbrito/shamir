@@ -3,17 +3,19 @@
 }
 
 .tab-content {
-  padding: 20px
+  padding: 20px;
 }
 
-.modal-dialog { 
+.modal-dialog {
   max-width: 80%;
 }
 
 canvas {
   width: 100%;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
 }
-
 
 input.form-control {
   width: 30%;
@@ -35,7 +37,7 @@ input.form-control {
   font-size: 16px;
 }
 
-.input-group { 
+.input-group {
   margin-bottom: 1rem;
 }
 
@@ -44,7 +46,7 @@ input.form-control {
     flex-direction: column;
     align-items: center;
   }
-  .hash { 
+  .hash {
     margin-left: 0;
     margin-top: 20px;
   }
