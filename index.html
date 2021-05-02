@@ -4,12 +4,10 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Page Title</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-
+  <title>Shamir</title>
   <link rel='stylesheet' type='text/css' media='screen' href='css/bootstrap.min.css'>
   <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
-
 </head>
 
 <body>
@@ -22,7 +20,7 @@
       never leave your machine!
     </h6>
     <p>
-      To achive this this project uses
+      To achieve this this project uses
       <a href="https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing">Shamir's secret sharing</a>
       to split your secret into shares which can be combined back into the original secret using some
       or all of the shares.
@@ -43,9 +41,7 @@
       <!-- COMBINE CONTENT -->
       <div class="tab-pane fade show active" id="combine">
 
-        <p>Combine the shares to reveal the secret.</p>
-
-        <h3>Shares</h3>
+        <p>Fill the inputs with shares to reveal the secret message.</p>
 
         <div id="sharesInputs"></div>
 
@@ -54,7 +50,7 @@
             Secret Message
           </div>
           <div class="card-body" id="combine-secret">
-            Nothing
+            Fill the shares
           </div>
         </div>
       </div>
@@ -62,10 +58,7 @@
       <!-- GENERATE CONTENT -->
       <div class="tab-pane fade" id="generate">
 
-        <p>Where you can create new shares for a secret.</p>
-
-
-        <h3>Form</h3>
+        <p>Fill the form to generate shares for your secret message.</p>
 
         <form>
 

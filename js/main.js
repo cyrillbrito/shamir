@@ -29,8 +29,8 @@ function tick() {
     });
     if (code) {
       scanningInput.value = code.data;
+      combine(scanningInput);
       closeModalEl.click();
-      combine();
     }
   }
   requestAnimationFrame(tick);
@@ -59,22 +59,26 @@ function pushShareInput() {
   scanBtn.classList.add('btn-outline-secondary');
   scanBtn.setAttribute('data-bs-toggle', 'modal');
   scanBtn.setAttribute('data-bs-target', '#scanModal');
-  scanBtn.onclick = () => { scanningInput = input };
+  scanBtn.onclick = () => { scanningInput = input; };
   group.append(scanBtn);
 
   const removeBtn = document.createElement('button');
   removeBtn.innerText = 'Remove share';
   removeBtn.classList.add('btn');
   removeBtn.classList.add('btn-outline-danger');
+  removeBtn.disabled = true;
+  removeBtn.onclick = () => sharesEl.removeChild(group);
   group.append(removeBtn);
 
-  input.addEventListener('input', combine);
+  input.addEventListener('input', () => combine(input));
 }
 
-function combine() {
+function combine(input) {
   if (inputs.every(i => i.value)) {
     pushShareInput();
   }
+
+  input.parentNode.lastChild.disabled = false;
 
   const shares = inputs.map(i => i.value).filter(s => s);
   const el = document.getElementById('combine-secret');
@@ -97,7 +101,6 @@ document.getElementById('nInput').addEventListener('input', generate);
 generate();
 
 function generate() {
-
   const secretStr = document.getElementById('secretInput').value;
   const secret = secrets.str2hex(secretStr);
 
@@ -125,7 +128,6 @@ function generate() {
 }
 
 function addAlert(message) {
-
   const alert = document.createElement('div');
   alert.classList.add('alert');
   alert.classList.add('alert-warning');
